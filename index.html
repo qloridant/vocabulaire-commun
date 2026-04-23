@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="fr" data-fr-scheme="system">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Sémantique — Documentation agents techniques</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.11.2/dist/dsfr/dsfr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.11.2/dist/utility/utility.min.css">
+<style>
+  .doc-hero { background: #f0f0fb; border-left: 4px solid #6a6af4; padding: 2rem; margin-bottom: 2rem; }
+  .doc-hero h1 { color: #3a3a8c; margin-top: 0; }
+  .vocab-badge { display: inline-block; background: #e3e3fd; color: #3a3a8c; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem; font-weight: 600; font-family: monospace; margin-right: 0.25rem; }
+  .diataxis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+  .diataxis-card { border-radius: 8px; padding: 1.25rem; border: 1px solid; }
+  .diataxis-tuto  { background: #fff8e5; border-color: #c8aa00; }
+  .diataxis-guide { background: #e5f2ff; border-color: #0063cb; }
+  .diataxis-ref   { background: #ffe9e6; border-color: #e1000f; }
+  .diataxis-expl  { background: #e6faf3; border-color: #18753c; }
+  .diataxis-card h3 { margin-top: 0; font-size: 1rem; }
+  .diataxis-card ul { margin: 0; padding-left: 1.2rem; font-size: 0.9rem; }
+  .diataxis-card ul li { margin-bottom: 0.3rem; }
+  .code-block { background: #1e1e2e; color: #cdd6f4; padding: 1rem 1.25rem; border-radius: 6px; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.82rem; line-height: 1.6; }
+  .code-block .kw  { color: #cba6f7; }
+  .code-block .str { color: #a6e3a1; }
+  .code-block .uri { color: #89dceb; }
+  .code-block .cm  { color: #6c7086; font-style: italic; }
+  .vocab-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .vocab-table th { background: #f0f0fb; color: #3a3a8c; text-align: left; padding: 0.6rem 0.8rem; border-bottom: 2px solid #6a6af4; }
+  .vocab-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
+  .vocab-table tr:hover td { background: #f8f8ff; }
+  .tag-eu { background: #003189; color: #fff; border-radius: 3px; padding: 2px 7px; font-size: 0.7rem; font-weight: 700; }
+  .tag-w3c { background: #005a9c; color: #fff; border-radius: 3px; padding: 2px 7px; font-size: 0.7rem; font-weight: 700; }
+  .section-title { border-left: 4px solid #6a6af4; padding-left: 0.75rem; color: #3a3a8c; }
+  .tip-box { background: #e6faf3; border-left: 4px solid #18753c; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.9rem; }
+  .warn-box { background: #fff8e5; border-left: 4px solid #c8aa00; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.9rem; }
+  .nav-steps { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0; }
+  .step-pill { background: #fff; border: 1px solid #6a6af4; color: #3a3a8c; border-radius: 20px; padding: 0.3rem 1rem; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; }
+  .step-num { background: #6a6af4; color: #fff; border-radius: 50%; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<header role="banner" class="fr-header">
+  <div class="fr-header__body">
+    <div class="fr-container">
+      <div class="fr-header__body-row">
+        <div class="fr-header__brand fr-enlarge-link">
+          <div class="fr-header__brand-top">
+            <div class="fr-header__logo">
+              <p class="fr-logo">République<br>Française</p>
+            </div>
+            <div class="fr-header__operator">
+              <p style="font-weight: 700; color: #3a3a8c; margin: 0; font-size: 1.1rem;">Web Sémantique</p>
+              <p style="font-size: 0.8rem; color: #666; margin: 0;">Documentation agents techniques</p>
+            </div>
+          </div>
+        </div>
+        <div class="fr-header__tools">
+          <div class="fr-header__tools-links">
+            <ul class="fr-btns-group">
+              <li><a class="fr-btn fr-btn--sm fr-icon-external-link-line fr-btn--icon-left" href="https://joinup.ec.europa.eu/collection/semantic-interoperability-community-semic" target="_blank">SEMIC</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fr-header__menu fr-modal" id="header-navigation">
+    <div class="fr-container">
+      <nav class="fr-nav" role="navigation" aria-label="Menu principal">
+        <ul class="fr-nav__list">
+          <li class="fr-nav__item"><a class="fr-nav__link" href="#tutoriels" target="_self">Tutoriels</a></li>
+          <li class="fr-nav__item"><a class="fr-nav__link" href="#guides" target="_self">Guides</a></li>
+          <li class="fr-nav__item"><a class="fr-nav__link" href="#references" target="_self">Références</a></li>
+          <li class="fr-nav__item"><a class="fr-nav__link" href="#explication" target="_self">Explications</a></li>
+          <li class="fr-nav__item"><a class="fr-nav__link" href="#exemples" target="_self">Exemples RDF</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main role="main" id="content">
+<div class="fr-container fr-py-4w">
+
+  <!-- HERO -->
+  <div class="doc-hero">
+    <h1 class="fr-h2">Web Sémantique &amp; Core Vocabularies UE</h1>
+    <p class="fr-text--lg" style="margin-bottom: 0.5rem;">Documentation à destination des <strong>agents techniques des administrations françaises</strong>.</p>
+    <p style="color: #555; margin-bottom: 1rem; font-size: 0.9rem;">Interopérabilité européenne · Open Data · SEMIC · ISA² · DCAT-AP</p>
+    <div>
+      <span class="vocab-badge">Core Person</span>
+      <span class="vocab-badge">Core Business</span>
+      <span class="vocab-badge">Core Location</span>
+      <span class="vocab-badge">CPSV-AP</span>
+      <span class="vocab-badge">CCCEV</span>
+    </div>
+  </div>
+
+  <!-- DIATAXIS -->
+  <h2 class="section-title fr-h3">Structure de la documentation <span style="font-style: italic; font-weight: 400; font-size: 0.85rem; color: #666;">(cadre Diátaxis)</span></h2>
+  <div class="diataxis-grid">
+    <div class="diataxis-card diataxis-tuto">
+      <h3>📖 Tutoriels</h3>
+      <p style="font-size:0.85rem; color:#555; margin-bottom:0.5rem;">Apprendre par la pratique</p>
+      <ul>
+        <li><a href="#tuto-1">01 · Core Person — premier triplet RDF</a></li>
+        <li><a href="#tuto-2">02 · Core Business — organisations</a></li>
+        <li><a href="#tuto-3">03 · Core Location — adresses</a></li>
+        <li><a href="#tuto-4">04 · CPSV-AP — services publics</a></li>
+      </ul>
+    </div>
+    <div class="diataxis-card diataxis-guide">
+      <h3>🔧 Guides pratiques</h3>
+      <p style="font-size:0.85rem; color:#555; margin-bottom:0.5rem;">Résoudre un problème concret</p>
+      <ul>
+        <li><a href="#guide-1">Publier en JSON-LD</a></li>
+        <li><a href="#guide-2">Requêtes SPARQL</a></li>
+        <li><a href="#guide-3">Alignement référentiels EU</a></li>
+      </ul>
+    </div>
+    <div class="diataxis-card diataxis-ref">
+      <h3>📋 Références</h3>
+      <p style="font-size:0.85rem; color:#555; margin-bottom:0.5rem;">Consulter une spécification</p>
+      <ul>
+        <li><a href="#ref-person">Core Person Vocabulary</a></li>
+        <li><a href="#ref-business">Core Business Vocabulary</a></li>
+        <li><a href="#ref-location">Core Location Vocabulary</a></li>
+        <li><a href="#ref-cpsv">CPSV-AP</a></li>
+      </ul>
+    </div>
+    <div class="diataxis-card diataxis-expl">
+      <h3>💡 Explications</h3>
+      <p style="font-size:0.85rem; color:#555; margin-bottom:0.5rem;">Comprendre les concepts</p>
+      <ul>
+        <li><a href="#expl-1">Pourquoi le Web sémantique ?</a></li>
+        <li><a href="#expl-2">Formats RDF : Turtle, JSON-LD…</a></li>
+        <li><a href="#expl-3">Triplets et graphes de données</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fr-divider"></div>
+
+  <!-- VOCABULAIRES CORE -->
+  <section id="references">
+    <h2 class="section-title fr-h3 fr-mt-4w">Vocabulaires Core de l'UE <span class="tag-eu">SEMIC</span></h2>
+    <p style="font-size:0.9rem; color:#444;">Maintenus par la Commission européenne dans le cadre du programme <strong>ISA²/SEMIC</strong>. Légers, extensibles, alignés avec schema.org et Dublin Core.</p>
+
+    <table class="vocab-table">
+      <thead>
+        <tr>
+          <th>Vocabulaire</th>
+          <th>Domaine</th>
+          <th>Namespace</th>
+          <th>Préfixe</th>
+          <th>Origine</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="ref-person">
+          <td><strong>Core Person Vocabulary</strong></td>
+          <td>Personnes physiques</td>
+          <td><code style="font-size:0.78rem;">http://www.w3.org/ns/person#</code></td>
+          <td><code>person:</code></td>
+          <td><span class="tag-w3c">W3C</span> <span class="tag-eu">EU</span></td>
+        </tr>
+        <tr id="ref-business">
+          <td><strong>Core Business Vocabulary</strong></td>
+          <td>Organisations, personnes morales</td>
+          <td><code style="font-size:0.78rem;">http://www.w3.org/ns/legal#</code></td>
+          <td><code>legal:</code></td>
+          <td><span class="tag-w3c">W3C</span> <span class="tag-eu">EU</span></td>
+        </tr>
+        <tr id="ref-location">
+          <td><strong>Core Location Vocabulary</strong></td>
+          <td>Adresses, géométries</td>
+          <td><code style="font-size:0.78rem;">http://www.w3.org/ns/locn#</code></td>
+          <td><code>locn:</code></td>
+          <td><span class="tag-w3c">W3C</span> <span class="tag-eu">EU</span></td>
+        </tr>
+        <tr id="ref-cpsv">
+          <td><strong>CPSV-AP</strong></td>
+          <td>Services publics, démarches</td>
+          <td><code style="font-size:0.78rem;">http://purl.org/vocab/cpsv#</code></td>
+          <td><code>cpsv:</code></td>
+          <td><span class="tag-eu">EU</span></td>
+        </tr>
+        <tr>
+          <td><strong>CCCEV</strong></td>
+          <td>Critères, pièces justificatives</td>
+          <td><code style="font-size:0.78rem;">http://data.europa.eu/m8g/</code></td>
+          <td><code>cv:</code></td>
+          <td><span class="tag-eu">EU</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="fr-divider fr-mt-4w"></div>
+
+  <!-- EXEMPLES RDF -->
+  <section id="exemples">
+    <h2 class="section-title fr-h3 fr-mt-4w">Exemples RDF commentés</h2>
+
+    <!-- Tabs via DSFR -->
+    <div class="fr-tabs" id="exemples-tabs">
+      <ul class="fr-tabs__list" role="tablist">
+        <li role="presentation"><button class="fr-tabs__tab" tabindex="0" role="tab" aria-controls="tab-person" id="tab-person-btn" aria-selected="true">Personne physique</button></li>
+        <li role="presentation"><button class="fr-tabs__tab" tabindex="-1" role="tab" aria-controls="tab-org" id="tab-org-btn" aria-selected="false">Organisation</button></li>
+        <li role="presentation"><button class="fr-tabs__tab" tabindex="-1" role="tab" aria-controls="tab-service" id="tab-service-btn" aria-selected="false">Service public</button></li>
+        <li role="presentation"><button class="fr-tabs__tab" tabindex="-1" role="tab" aria-controls="tab-jsonld" id="tab-jsonld-btn" aria-selected="false">JSON-LD</button></li>
+      </ul>
+
+      <!-- Personne -->
+      <div id="tab-person" class="fr-tabs__panel fr-tabs__panel--selected" role="tabpanel">
+        <p style="font-size:0.9rem; color:#555;">Utilisation du <strong>Core Person Vocabulary</strong> + schema.org</p>
+        <div class="code-block">
+<span class="cm"># Déclaration des préfixes</span>
+<span class="kw">@prefix</span> <span class="uri">person:</span>  <span class="str">&lt;http://www.w3.org/ns/person#&gt;</span> .
+<span class="kw">@prefix</span> <span class="uri">schema:</span>  <span class="str">&lt;http://schema.org/&gt;</span> .
+<span class="kw">@prefix</span> <span class="uri">xsd:</span>     <span class="str">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span> .
+
+<span class="str">&lt;https://data.example.gouv.fr/personne/p-001&gt;</span>
+    <span class="kw">a</span> <span class="uri">person:Person</span> ;
+
+    <span class="cm"># Identité</span>
+    <span class="uri">schema:givenName</span>       <span class="str">"Marie"</span> ;
+    <span class="uri">schema:familyName</span>     <span class="str">"Dupont"</span> ;
+    <span class="uri">person:birthName</span>      <span class="str">"Marie Martin"</span> ;
+    <span class="uri">schema:birthDate</span>      <span class="str">"1985-04-12"^^xsd:date</span> ;
+
+    <span class="cm"># Nationalité (référentiel Publications Office EU)</span>
+    <span class="uri">person:citizenship</span>
+        <span class="str">&lt;http://publications.europa.eu/resource/authority/country/FRA&gt;</span> ;
+
+    <span class="cm"># Lieu de naissance (lié à Core Location)</span>
+    <span class="uri">person:placeOfBirth</span>
+        <span class="str">&lt;https://data.example.gouv.fr/commune/75056&gt;</span> .
+        </div>
+        <div class="tip-box fr-mt-2w">
+          <strong>Bonne pratique :</strong> utilisez des URI pérennes sous votre domaine officiel <code>data.monministere.gouv.fr</code>. Les valeurs de listes contrôlées (pays, langues) doivent pointer vers les référentiels du <a href="https://op.europa.eu/en/web/eu-vocabularies" target="_blank">Publications Office</a>.
+        </div>
+      </div>
+
+      <!-- Organisation -->
+      <div id="tab-org" class="fr-tabs__panel" role="tabpanel">
+        <p style="font-size:0.9rem; color:#555;">Utilisation du <strong>Core Business Vocabulary</strong> + W3C Org Ontology</p>
+        <div class="code-block">
+<span class="kw">@prefix</span> <span class="uri">legal:</span>  <span class="str">&lt;http://www.w3.org/ns/legal#&gt;</span> .
+<span class="kw">@prefix</span> <span class="uri">org:</span>    <span class="str">&lt;http://www.w3.org/ns/org#&gt;</span> .
+<span class="kw">@prefix</span> <span class="uri">schema:</span> <span class="str">&lt;http://schema.org/&gt;</span> .
+<span class="kw">@prefix</span> <span class="uri">locn:</span>   <span class="str">&lt;http://www.w3.org/ns/locn#&gt;</span> .
+
+<span class="str">&lt;https://data.example.gouv.fr/org/dinum&gt;</span>
+    <span class="kw">a</span> <span class="uri">legal:LegalEntity</span>, <span class="uri">org:Organization</span> ;
+
+    <span class="uri">legal:legalName</span>       <span class="str">"Direction interministérielle du numérique"@fr</span> ;
+    <span class="uri">legal:alternativeName</span> <span class="str">"DINUM"@fr</span> ;
+    <span class="uri">legal:legalIdentifier</span> <span class="str">"13001518700013"</span> ; <span class="cm"># SIRET</span>
+    <span class="uri">legal:companyType</span>
+        <span class="str">&lt;http://publications.europa.eu/resource/authority/legal-entity-type/GOV&gt;</span> ;
+
+    <span class="uri">schema:url</span>            <span class="str">&lt;https://www.numerique.gouv.fr&gt;</span> ;
+    <span class="uri">legal:registeredAddress</span> <span class="str">&lt;https://data.example.gouv.fr/adresse/dinum&gt;</span> ;
+
+    <span class="cm"># Tutelle</span>
+    <span class="uri">org:subOrganizationOf</span>
+        <span class="str">&lt;https://data.example.gouv.fr/org/premier-ministre&gt;</span> .
+        </div>
+      </div>
+
+      <!-- Service public -->
+      <div id="tab-service" class="fr-tabs__panel" role="tabpanel">
+        <p style="font-size:0.9rem; color:#555;">Utilisation de <strong>CPSV-AP</strong> — démarche administrative</p>
+        <div class="code-block">
+<span class="kw">@prefix</span> <span class="uri">cpsv:</span>  <span class="str">&lt;http://purl.org/vocab/cpsv#&gt;</span> .
+<span class="kw">@prefix</span> <span class="uri">cv:</span>    <span class="str">&lt;http://data.europa.eu/m8g/&gt;</span> .
+<span class="kw">@prefix</span> <span class="uri">dct:</span>   <span class="str">&lt;http://purl.org/dc/terms/&gt;</span> .
+<span class="kw">@prefix</span> <span class="uri">xsd:</span>   <span class="str">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span> .
+
+<span class="str">&lt;https://data.example.gouv.fr/service/carte-grise&gt;</span>
+    <span class="kw">a</span> <span class="uri">cpsv:PublicService</span> ;
+    <span class="uri">dct:title</span>               <span class="str">"Immatriculation d'un véhicule"@fr</span> ;
+    <span class="uri">dct:description</span>         <span class="str">"Obtenir un certificat d'immatriculation."@fr</span> ;
+    <span class="uri">dct:language</span>
+        <span class="str">&lt;http://publications.europa.eu/resource/authority/language/FRA&gt;</span> ;
+
+    <span class="cm"># Organisme compétent</span>
+    <span class="uri">cv:hasCompetentAuthority</span>
+        <span class="str">&lt;https://data.example.gouv.fr/org/ants&gt;</span> ;
+
+    <span class="cm"># Canal d'accès</span>
+    <span class="uri">cpsv:hasChannel</span>
+        <span class="str">&lt;https://data.example.gouv.fr/canal/ants-web&gt;</span> ;
+
+    <span class="cm"># Pièce requise</span>
+    <span class="uri">cpsv:hasInput</span>
+        <span class="str">&lt;https://data.example.gouv.fr/evidence/certificat-cession&gt;</span> ;
+
+    <span class="cm"># Résultat</span>
+    <span class="uri">cpsv:produces</span>
+        <span class="str">&lt;https://data.example.gouv.fr/output/certificat-immat&gt;</span> ;
+
+    <span class="cm"># Délai de traitement</span>
+    <span class="uri">cv:processingTime</span>       <span class="str">"P3D"^^xsd:duration</span> .
+        </div>
+      </div>
+
+      <!-- JSON-LD -->
+      <div id="tab-jsonld" class="fr-tabs__panel" role="tabpanel">
+        <p style="font-size:0.9rem; color:#555;">Le même organisme, en <strong>JSON-LD</strong> — compatible avec toute API REST</p>
+        <div class="code-block">
+{
+  <span class="str">"@context"</span>: {
+    <span class="str">"legal"</span>: <span class="str">"http://www.w3.org/ns/legal#"</span>,
+    <span class="str">"schema"</span>: <span class="str">"http://schema.org/"</span>,
+    <span class="str">"locn"</span>: <span class="str">"http://www.w3.org/ns/locn#"</span>,
+    <span class="str">"legalName"</span>: <span class="str">"legal:legalName"</span>,
+    <span class="str">"identifier"</span>: <span class="str">"schema:identifier"</span>,
+    <span class="str">"url"</span>: <span class="str">"schema:url"</span>
+  },
+  <span class="str">"@type"</span>: <span class="str">"legal:LegalEntity"</span>,
+  <span class="str">"@id"</span>: <span class="str">"https://data.example.gouv.fr/org/dinum"</span>,
+  <span class="str">"legalName"</span>: <span class="str">"Direction interministérielle du numérique"</span>,
+  <span class="str">"identifier"</span>: <span class="str">"13001518700013"</span>,
+  <span class="str">"url"</span>: <span class="str">"https://www.numerique.gouv.fr"</span>
+}
+        </div>
+        <div class="warn-box fr-mt-2w">
+          <strong>En-tête HTTP requis :</strong> <code>Content-Type: application/ld+json</code> — sans cela, le contenu ne sera pas reconnu comme du RDF par les parseurs.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="fr-divider fr-mt-4w"></div>
+
+  <!-- PARCOURS -->
+  <section id="tutoriels">
+    <h2 class="section-title fr-h3 fr-mt-4w">Parcours d'apprentissage recommandé</h2>
+    <div class="nav-steps">
+      <div class="step-pill"><span class="step-num">1</span> Lire l'explication</div>
+      <div style="display:flex;align-items:center;color:#aaa;">→</div>
+      <div class="step-pill"><span class="step-num">2</span> Tutoriel Core Person</div>
+      <div style="display:flex;align-items:center;color:#aaa;">→</div>
+      <div class="step-pill"><span class="step-num">3</span> Tutoriel Core Business</div>
+      <div style="display:flex;align-items:center;color:#aaa;">→</div>
+      <div class="step-pill"><span class="step-num">4</span> Guide JSON-LD</div>
+      <div style="display:flex;align-items:center;color:#aaa;">→</div>
+      <div class="step-pill"><span class="step-num">5</span> Guide SPARQL</div>
+    </div>
+
+    <div class="fr-grid-row fr-grid-row--gutters fr-mt-2w">
+      <div class="fr-col-12 fr-col-md-6">
+        <div class="fr-card fr-card--shadow">
+          <div class="fr-card__body">
+            <div class="fr-card__content">
+              <h3 class="fr-card__title">Tutoriels (4)</h3>
+              <p class="fr-card__desc">Guides pas à pas avec code Turtle vérifiable. Chaque tutoriel produit un fichier RDF valide.</p>
+              <ul style="font-size:0.9rem;">
+                <li>01 · Core Person — Mon premier triplet</li>
+                <li>02 · Core Business — Organisations</li>
+                <li>03 · Core Location — Adresses et géométries</li>
+                <li>04 · CPSV-AP — Services publics</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fr-col-12 fr-col-md-6">
+        <div class="fr-card fr-card--shadow">
+          <div class="fr-card__body">
+            <div class="fr-card__content">
+              <h3 class="fr-card__title">Guides pratiques (3)</h3>
+              <p class="fr-card__desc">Réponses orientées problème. Chaque guide commence par « vous avez… vous souhaitez… ».</p>
+              <ul style="font-size:0.9rem;">
+                <li>Publier ses données en JSON-LD</li>
+                <li>Interroger un triplestore avec SPARQL</li>
+                <li>Aligner avec les référentiels européens</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="fr-divider fr-mt-4w"></div>
+
+  <!-- LIENS -->
+  <section id="explication">
+    <h2 class="section-title fr-h3 fr-mt-4w">Liens & ressources officielles</h2>
+    <div class="fr-grid-row fr-grid-row--gutters">
+      <div class="fr-col-12 fr-col-md-4">
+        <div class="fr-tile fr-tile--horizontal fr-tile--sm fr-enlarge-link">
+          <div class="fr-tile__body"><div class="fr-tile__content">
+            <h3 class="fr-tile__title"><a href="https://joinup.ec.europa.eu/collection/semantic-interoperability-community-semic" target="_blank">SEMIC</a></h3>
+            <p class="fr-tile__desc">Communauté d'interopérabilité sémantique — Commission européenne</p>
+          </div></div>
+        </div>
+      </div>
+      <div class="fr-col-12 fr-col-md-4">
+        <div class="fr-tile fr-tile--horizontal fr-tile--sm fr-enlarge-link">
+          <div class="fr-tile__body"><div class="fr-tile__content">
+            <h3 class="fr-tile__title"><a href="https://schema.gouv.fr" target="_blank">schema.gouv.fr</a></h3>
+            <p class="fr-tile__desc">Schémas de données des administrations françaises</p>
+          </div></div>
+        </div>
+      </div>
+      <div class="fr-col-12 fr-col-md-4">
+        <div class="fr-tile fr-tile--horizontal fr-tile--sm fr-enlarge-link">
+          <div class="fr-tile__body"><div class="fr-tile__content">
+            <h3 class="fr-tile__title"><a href="https://data.europa.eu/sparql" target="_blank">data.europa.eu</a></h3>
+            <p class="fr-tile__desc">Point d'accès SPARQL du portail open data européen</p>
+          </div></div>
+        </div>
+      </div>
+      <div class="fr-col-12 fr-col-md-4">
+        <div class="fr-tile fr-tile--horizontal fr-tile--sm fr-enlarge-link">
+          <div class="fr-tile__body"><div class="fr-tile__content">
+            <h3 class="fr-tile__title"><a href="https://op.europa.eu/en/web/eu-vocabularies" target="_blank">EU Vocabularies</a></h3>
+            <p class="fr-tile__desc">Référentiels contrôlés (pays, langues, types…) du Publications Office</p>
+          </div></div>
+        </div>
+      </div>
+      <div class="fr-col-12 fr-col-md-4">
+        <div class="fr-tile fr-tile--horizontal fr-tile--sm fr-enlarge-link">
+          <div class="fr-tile__body"><div class="fr-tile__content">
+            <h3 class="fr-tile__title"><a href="https://api-adresse.data.gouv.fr" target="_blank">API BAN</a></h3>
+            <p class="fr-tile__desc">Base Adresse Nationale — géocodage et données d'adresse</p>
+          </div></div>
+        </div>
+      </div>
+      <div class="fr-col-12 fr-col-md-4">
+        <div class="fr-tile fr-tile--horizontal fr-tile--sm fr-enlarge-link">
+          <div class="fr-tile__body"><div class="fr-tile__content">
+            <h3 class="fr-tile__title"><a href="https://json-ld.org/playground/" target="_blank">JSON-LD Playground</a></h3>
+            <p class="fr-tile__desc">Valider et convertir du JSON-LD en ligne</p>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer class="fr-footer" role="contentinfo">
+  <div class="fr-container">
+    <div class="fr-footer__body">
+      <div class="fr-footer__brand fr-enlarge-link">
+        <p class="fr-logo">République<br>Française</p>
+      </div>
+      <div class="fr-footer__content">
+        <p class="fr-footer__content-desc">Documentation Web Sémantique — Administrations françaises · Format Diátaxis · Design DSFR</p>
+        <ul class="fr-footer__content-list">
+          <li><a class="fr-footer__content-link" href="https://joinup.ec.europa.eu/collection/semantic-interoperability-community-semic" target="_blank">SEMIC</a></li>
+          <li><a class="fr-footer__content-link" href="https://www.systeme-de-design.gouv.fr" target="_blank">Système de Design de l'État</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.11.2/dist/dsfr/dsfr.module.min.js" type="module"></script>
+<script src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.11.2/dist/dsfr/dsfr.nomodule.min.js" nomodule></script>
+</body>
+</html>
