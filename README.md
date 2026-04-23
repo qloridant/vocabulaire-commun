@@ -1,3 +1,48 @@
+# docs-web-semantique
+
+Documentation Web Sémantique à destination des agents techniques des administrations françaises.
+
+→ **[Accéder à la documentation](https://votre-organisation.github.io/docs-web-semantique/)**
+
+---
+
+## Développement local
+
+```bash
+pip install -r requirements.txt
+mkdocs serve
+# → http://127.0.0.1:8000
+```
+
+## Déploiement initial (une seule fois)
+
+Dans les **Settings** de votre repo GitHub :  
+`Pages → Source → GitHub Actions`
+
+Ensuite chaque push sur `main` redéploie automatiquement.
+
+## Structure
+
+```
+docs/                        ← fichiers Markdown à éditer
+├── index.md
+├── explication/
+├── tutoriels/
+├── guides/
+├── references/
+└── assets/dsfr-overrides.css
+
+mkdocs.yml                   ← configuration
+requirements.txt
+.github/workflows/deploy.yml ← CI/CD GitHub Actions
+```
+
+---
+
+Cadre : [Diátaxis](https://diataxis.fr) · Thème : [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) · Vocabulaires : [SEMIC](https://joinup.ec.europa.eu/collection/semantic-interoperability-community-semic)
+
+---
+
 # Documentation Web Sémantique — Administrations françaises
 
 > Documentation à destination des agents techniques des administrations françaises pour l'adoption du Web sémantique et des vocabulaires Core de l'Union européenne.

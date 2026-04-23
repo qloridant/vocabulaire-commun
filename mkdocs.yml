@@ -1,0 +1,90 @@
+site_name: Web Sémantique — Administrations françaises
+site_description: Documentation à destination des agents techniques des administrations françaises pour l'adoption du Web sémantique et des Core Vocabularies de l'Union européenne.
+site_author: DINUM
+site_url: https://votre-organisation.github.io/docs-web-semantique/
+
+repo_name: votre-organisation/docs-web-semantique
+repo_url: https://github.com/votre-organisation/docs-web-semantique
+edit_uri: edit/main/docs/
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  language: fr
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Passer en mode sombre
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Passer en mode clair
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.action.edit
+  icon:
+    repo: fontawesome/brands/github
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/votre-organisation/docs-web-semantique
+  generator: false
+
+extra_css:
+  - assets/dsfr-overrides.css
+
+plugins:
+  - search:
+      lang: fr
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+nav:
+  - Accueil: index.md
+  - Explications:
+    - Le Web sémantique: explication/01-web-semantique.md
+    - Les formats RDF: explication/02-formats-rdf.md
+  - Tutoriels:
+    - Vue d'ensemble: tutoriels/index.md
+    - "01 · Core Person": tutoriels/01-core-person.md
+    - "02 · Core Business": tutoriels/02-core-business.md
+    - "03 · Core Location": tutoriels/03-core-location.md
+    - "04 · CPSV-AP": tutoriels/04-core-public-service.md
+  - Guides pratiques:
+    - Publier en JSON-LD: guides/01-jsonld-publication.md
+    - Requêtes SPARQL: guides/02-sparql-requetes.md
+    - Alignement référentiels EU: guides/03-alignement-referentiels.md
+  - Références:
+    - Core Person Vocabulary: references/core-person.md
+    - Core Business Vocabulary: references/core-business.md
+    - Core Location Vocabulary: references/core-location.md
+    - CPSV-AP: references/core-public-service.md
