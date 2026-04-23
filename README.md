@@ -30,7 +30,6 @@ docs/                        ← fichiers Markdown à éditer
 ├── tutoriels/
 ├── guides/
 ├── references/
-└── assets/dsfr-overrides.css
 
 mkdocs.yml                   ← configuration
 requirements.txt
