@@ -2,7 +2,7 @@
 
 Documentation Web Sémantique à destination des agents techniques des administrations françaises.
 
-→ **[Accéder à la documentation](https://votre-organisation.github.io/docs-web-semantique/)**
+→ **[Accéder à la documentation](https://qloridant.github.io/vocabulaire-commun/)**
 
 ---
 
