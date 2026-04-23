@@ -17,8 +17,6 @@ Les administrations françaises publient des données hétérogènes, fragmenté
 
 ## Structure de la documentation
 
-Cette documentation suit le cadre **[Diátaxis](https://diataxis.fr)** :
-
 | Section | Objectif | Pour qui |
 |---|---|---|
 | [Explications](./explication/01-web-semantique.md) | Comprendre les concepts | Tous |
@@ -68,6 +66,6 @@ Explication (concepts)
 - [SEMIC — Semantic Interoperability Community](https://joinup.ec.europa.eu/collection/semantic-interoperability-community-semic)
 - [EU Vocabularies — Publications Office](https://op.europa.eu/en/web/eu-vocabularies)
 - [data.europa.eu — portail open data EU](https://data.europa.eu)
-- [schema.gouv.fr — schémas français](https://schema.gouv.fr)
-- [API Base Adresse Nationale](https://api-adresse.data.gouv.fr)
+- [schema.gouv.fr — schémas français](https://schema.data.gouv.fr)
+- [Base Adresse Nationale](https://adresse.data.gouv.fr/)
 - [JSON-LD Playground](https://json-ld.org/playground/)

@@ -98,7 +98,7 @@ Ces vocabulaires sont :
 | "C'est réservé aux chercheurs" | Les Core Vocabularies sont conçus pour l'administration |
 | "Il faut tout réécrire" | JSON-LD permet d'enrichir des APIs existantes |
 | "C'est trop complexe" | Commencer par décrire 5 propriétés suffit pour démarrer |
-| "Personne ne l'utilise" | schema.org est utilisé par Google, Bing, data.gouv.fr… |
+| "Personne ne l'utilise" | schema.org est utilisé par l'IGN, le ministère de la Culture, data.gouv.fr… |
 
 ---
 
