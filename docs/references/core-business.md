@@ -2,7 +2,7 @@
 
 **Namespace** : `http://www.w3.org/ns/legal#`  
 **Préfixe courant** : `legal:`  
-**Spécification** : [https://www.w3.org/TR/vocab-org/](https://www.w3.org/TR/vocab-org/)  
+**Spécification** : [https://semiceu.github.io/Core-Business-Vocabulary/](https://semiceu.github.io/Core-Business-Vocabulary/)  
 **Mainteneur** : W3C / Commission européenne (SEMIC)
 
 ---

@@ -2,7 +2,7 @@
 
 **Namespace** : `http://www.w3.org/ns/person#`  
 **Préfixe courant** : `person:`  
-**Spécification** : [https://www.w3.org/TR/vocab-person/](https://www.w3.org/TR/vocab-person/)  
+**Spécification** : [https://semiceu.github.io/Core-Person-Vocabulary/](https://semiceu.github.io/Core-Person-Vocabulary/)  
 **Mainteneur** : W3C / Commission européenne (SEMIC)
 
 ---

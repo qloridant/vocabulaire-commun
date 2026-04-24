@@ -2,7 +2,7 @@
 
 **Namespace** : `http://www.w3.org/ns/locn#`  
 **Préfixe courant** : `locn:`  
-**Spécification** : [https://www.w3.org/ns/locn](https://www.w3.org/ns/locn)  
+**Spécification** : [https://semiceu.github.io/Core-Location-Vocabulary/](https://semiceu.github.io/Core-Location-Vocabulary/)  
 **Mainteneur** : W3C / Commission européenne (SEMIC)
 
 ---

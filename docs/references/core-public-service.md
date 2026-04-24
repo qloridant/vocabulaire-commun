@@ -3,7 +3,7 @@
 **Namespace CPSV** : `http://purl.org/vocab/cpsv#`  
 **Namespace CV** : `http://data.europa.eu/m8g/`  
 **Préfixes** : `cpsv:` et `cv:`  
-**Spécification** : [https://joinup.ec.europa.eu/collection/semantic-interoperability-community-semic/solution/core-public-service-vocabulary-application-profile](https://joinup.ec.europa.eu/collection/semantic-interoperability-community-semic/solution/core-public-service-vocabulary-application-profile)
+**Spécification** : [https://semiceu.github.io/CPSV-AP/](https://semiceu.github.io/CPSV-AP/)
 
 ---
 
