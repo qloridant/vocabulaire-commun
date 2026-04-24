@@ -1,7 +1,7 @@
 site_name: Web Sémantique — Administrations françaises
 site_description: Documentation à destination des agents techniques des administrations françaises pour l'adoption du Web sémantique et des Core Vocabularies de l'Union européenne.
 site_author: DINUM
-site_url: https://qloridant.github.io/vocabulaire-commun/
+site_url: https://votre-organisation.github.io/docs-web-semantique/
 
 repo_name: qloridant/vocabulaire-commun
 repo_url: https://github.com/qloridant/vocabulaire-commun
@@ -74,10 +74,11 @@ nav:
     - Le Web sémantique: explication/01-web-semantique.md
     - Les formats RDF: explication/02-formats-rdf.md
   - Tutoriels:
+    - Vue d'ensemble: tutoriels/index.md
     - "01 · Core Person": tutoriels/01-core-person.md
     - "02 · Core Business": tutoriels/02-core-business.md
     - "03 · Core Location": tutoriels/03-core-location.md
-    - "04 · CPSV-AP": tutoriels/04-core-public-service.md
+    - "04 · Pré-remplissage & SHACL": tutoriels/04-core-public-service.md
     - "05 · Oxigraph & SPARQL": tutoriels/05-oxigraph-local.md
   - Guides pratiques:
     - Publier en JSON-LD: guides/01-jsonld-publication.md

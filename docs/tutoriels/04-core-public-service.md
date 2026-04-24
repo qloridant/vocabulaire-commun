@@ -1,123 +1,323 @@
-# Tutoriel 04 — Décrire un service public avec CPSV-AP
+# Tutoriel 04 — Pré-remplissage d'une démarche avec CPSV-AP et validation SHACL
 
-> **Objectif** : Modéliser un service administratif avec le Core Public Service Vocabulary Application Profile (CPSV-AP).  
-> **Durée estimée** : 40 minutes  
+> **Objectif** : Comprendre comment des données usager transmises pour le pré-remplissage d'une démarche administrative peuvent être structurées avec CPSV-AP, identifier les erreurs du JSON-LD initial, et le corriger pour passer la validation SHACL officielle.  
+> **Durée estimée** : 45 minutes  
 > **Niveau** : Intermédiaire
 
 ---
 
 ## Ce que vous allez apprendre
 
-- La structure de **CPSV-AP**
-- Comment décrire un service, ses entrées et ses sorties
-- Comment lier un service à un organisme et une règle juridique
+- Comment CPSV-AP structure une démarche et ses données usager (`cv:isAbout`)
+- Comment valider un JSON-LD contre les règles SHACL officielles de CPSV-AP 3.2.0
+- Identifier et corriger des erreurs réelles détectées par le validateur
 
 ---
 
-## 1. Présentation de CPSV-AP
+## 1. Le contexte : pré-remplissage d'une démarche
 
-Le **CPSV-AP** est un profil d'application basé sur le Core Public Service Vocabulary. Il est recommandé par la Commission européenne pour décrire les services publics de manière interopérable.
+Lorsqu'un usager initie une démarche en ligne (par exemple via FranceConnect), le système peut transmettre les données déjà connues de l'usager au formulaire cible. Cette transmission peut être structurée en JSON-LD avec CPSV-AP.
 
-Namespaces principaux :
+Le service décrit ici est l'**Opération Tranquillité Vacances** — une démarche permettant à un particulier de signaler son absence à la police ou à la gendarmerie.
 
-```turtle
-@prefix cpsv:  <http://purl.org/vocab/cpsv#> .
-@prefix cv:    <http://data.europa.eu/m8g/> .
-@prefix dct:   <http://purl.org/dc/terms/> .
-@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+---
+
+## 2. L'exemple initial
+
+Voici le JSON-LD transmis par le système :
+
+```json
+{
+  "@context": {
+    "cpsv": "http://purl.org/vocab/cpsv#",
+    "cv":   "http://data.europa.eu/m8g/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "locn": "http://www.w3.org/ns/locn#",
+    "dct":  "http://purl.org/dc/terms/"
+  },
+  "@id":   "https://demarches.service-public.gouv.fr/mademarche/demarcheGenerique/?codeDemarche=OperationTranquilliteVacances",
+  "@type": "cpsv:PublicService",
+  "dct:description": {
+    "@language": "fr",
+    "@value": "Démarche en ligne pour le service Opération Tranquilité Vacances"
+  },
+  "cv:hasCompetentAuthority": {
+    "@id":   "https://api.monservice.fr/organisations/dila",
+    "@type": "foaf:Organization",
+    "foaf:name":     "DILA",
+    "foaf:nickname": "DILA",
+    "foaf:mbox":     { "@id": "mailto:contact@dila.gouv.fr" },
+    "foaf:homepage": { "@id": "https://www.services-publics.gouv.fr" }
+  },
+  "cv:isAbout": {
+    "@type":           "foaf:Person",
+    "foaf:familyName": "Wossewodda",
+    "foaf:mbox":       { "@id": "mailto:wossewodda-3728@yopmail.com" },
+    "locn:address": {
+      "@type":             "locn:Address",
+      "locn:thoroughfare": "20 Avenue de Ségur",
+      "locn:postName":     "Paris",
+      "locn:postCode":     "75007"
+    }
+  }
+}
 ```
 
 ---
 
-## 2. Exemple — Demande de carte grise
+## 3. Valider avec les shapes SHACL officielles
 
-```turtle
-@prefix cpsv:  <http://purl.org/vocab/cpsv#> .
-@prefix cv:    <http://data.europa.eu/m8g/> .
-@prefix dct:   <http://purl.org/dc/terms/> .
-@prefix schema: <http://schema.org/> .
-@prefix locn:  <http://www.w3.org/ns/locn#> .
+Les règles de validation de CPSV-AP 3.2.0 sont publiées par la Commission européenne :
 
-# --- Le service ---
-<https://data.example.gouv.fr/service/immatriculation-vehicule>
-    a cpsv:PublicService ;
+```
+https://semiceu.github.io/CPSV-AP/releases/3.2.0/shacl/cpsv-ap-SHACL.ttl
+```
 
-    dct:title           "Immatriculation d'un véhicule"@fr ;
-    dct:description     "Obtenir un certificat d'immatriculation (carte grise) pour un véhicule."@fr ;
-    dct:language        <http://publications.europa.eu/resource/authority/language/FRA> ;
+### Installation de pyshacl
 
-    # Organisme responsable
-    cv:hasCompetentAuthority <https://data.example.gouv.fr/org/ants> ;
+```bash
+pip install pyshacl rdflib
+```
 
-    # Canal(aux) d'accès
-    cpsv:hasChannel     <https://data.example.gouv.fr/canal/immat-web> ;
+### Script de validation
 
-    # Pièces requises (entrées)
-    cpsv:hasInput       <https://data.example.gouv.fr/evidence/certificat-cession> ,
-                        <https://data.example.gouv.fr/evidence/justificatif-domicile> ;
+```python
+from pyshacl import validate
+from rdflib import Graph
 
-    # Résultat produit (sortie)
-    cpsv:produces       <https://data.example.gouv.fr/output/certificat-immatriculation> ;
+# Charger les données à valider
+data_graph = Graph()
+data_graph.parse("exemple.jsonld", format="json-ld")
 
-    # Base légale
-    cv:hasLegalResource <https://data.example.gouv.fr/legal/code-route-R322-1> .
+# Charger les shapes SHACL
+shacl_graph = Graph()
+shacl_graph.parse("cpsv-ap-SHACL.ttl", format="turtle")
+
+# Lancer la validation
+conforms, results_graph, results_text = validate(
+    data_graph,
+    shacl_graph=shacl_graph,
+    inference='rdfs',       # Active le raisonnement RDFS
+    abort_on_first=False,   # Récupère toutes les erreurs
+    allow_infos=True,
+)
+
+print(f"Conforme : {conforms}")
+print(results_text)
 ```
 
 ---
 
-## 3. Décrire les entrées (pièces justificatives)
+## 4. Rapport de validation — 5 violations détectées
 
-```turtle
-@prefix cv:  <http://data.europa.eu/m8g/> .
-@prefix dct: <http://purl.org/dc/terms/> .
+L'exemple initial produit le rapport suivant :
 
-<https://data.example.gouv.fr/evidence/certificat-cession>
-    a cv:Evidence ;
-    dct:title       "Certificat de cession"@fr ;
-    dct:description "Formulaire Cerfa n°15776 signé par le vendeur et l'acheteur."@fr ;
-    cv:isConformantTo <https://www.service-public.fr/particuliers/vosdroits/R13567> .
+```
+Validation Report
+Conforms: False
+Results (5):
+```
+
+Voici chaque violation expliquée :
+
+---
+
+### ❌ Violation 1 — `cv:hasCompetentAuthority` : mauvais type
+
+**Règle SHACL** : `PublicServiceShape` — `hasCompetentAuthority` doit pointer vers une instance de `cv:PublicOrganisation`.
+
+**Erreur** :
+```
+Value does not have class <http://data.europa.eu/m8g/PublicOrganisation>
+Focus Node: ...OperationTranquilliteVacances
+Value Node: https://api.monservice.fr/organisations/dila
+```
+
+**Cause** : L'organisme est typé `foaf:Organization` alors que CPSV-AP exige `cv:PublicOrganisation`.
+
+**Correction** :
+```json
+"cv:hasCompetentAuthority": {
+  "@id":   "https://api.monservice.fr/organisations/dila",
+  "@type": "cv:PublicOrganisation"
+}
 ```
 
 ---
 
-## 4. Décrire la sortie (résultat du service)
+### ❌ Violation 2 — `dct:title` absent (`name` obligatoire)
 
-```turtle
-@prefix cpsv: <http://purl.org/vocab/cpsv#> .
-@prefix dct:  <http://purl.org/dc/terms/> .
+**Règle SHACL** : `PublicServiceShape` — `dct:title` est obligatoire (`minCount 1`).
 
-<https://data.example.gouv.fr/output/certificat-immatriculation>
-    a cpsv:Output ;
-    dct:title       "Certificat d'immatriculation"@fr ;
-    dct:type        <http://publications.europa.eu/resource/authority/output-type/CERTIFICATE> .
+**Erreur** :
+```
+Less than 1 values on ...OperationTranquilliteVacances -> dct:title
+```
+
+**Cause** : L'exemple fournit `dct:description` mais omet `dct:title`.
+
+**Correction** :
+```json
+"dct:title": {
+  "@language": "fr",
+  "@value": "Opération Tranquillité Vacances"
+}
 ```
 
 ---
 
-## 5. Décrire le canal d'accès
+### ❌ Violation 3 — `dct:identifier` absent
 
-```turtle
-@prefix cv:     <http://data.europa.eu/m8g/> .
-@prefix schema: <http://schema.org/> .
-@prefix dct:    <http://purl.org/dc/terms/> .
+**Règle SHACL** : `PublicServiceShape` — `dct:identifier` est obligatoire (`minCount 1`).
 
-<https://data.example.gouv.fr/canal/immat-web>
-    a cv:Channel ;
-    dct:type        <http://data.europa.eu/m8g/Online> ;
-    schema:url      <https://immatriculation.ants.gouv.fr> ;
-    dct:title       "Démarche en ligne — ANTS"@fr .
+**Erreur** :
+```
+Less than 1 values on ...OperationTranquilliteVacances -> dct:identifier
+```
+
+**Cause** : L'identifiant métier de la démarche n'est pas déclaré. L'URI de la ressource ne suffit pas.
+
+**Correction** :
+```json
+"dct:identifier": "OperationTranquilliteVacances"
 ```
 
 ---
 
-## Vérifiez votre compréhension
+### ❌ Violation 4 — `locn:thoroughfare` sans balise de langue
 
-- [ ] Quelle propriété lie un service à l'organisme qui en est responsable ?
-- [ ] Comment distinguer une entrée (preuve) d'une sortie dans CPSV ?
-- [ ] Où placer la base légale d'un service ?
+**Règle SHACL** : `AddressShape` — `locn:thoroughfare` doit avoir le datatype `rdf:langString`.
+
+**Erreur** :
+```
+Value is not Literal with datatype rdf:langString
+Value Node: Literal("20 Avenue de Ségur")
+```
+
+**Cause** : La valeur est un littéral simple. SHACL exige un littéral avec langue (`@language`).
+
+**Correction** :
+```json
+"locn:thoroughfare": { "@language": "fr", "@value": "20 Avenue de Ségur" }
+```
 
 ---
 
-## Étape suivante
+### ❌ Violation 5 — `locn:postName` sans balise de langue
 
-→ [Guide — Publier ses données en JSON-LD](../guides/01-jsonld-publication.md)
+Même cause que la violation 4, pour `locn:postName`.
+
+**Correction** :
+```json
+"locn:postName": { "@language": "fr", "@value": "Paris" }
+```
+
+---
+
+## 5. Le JSON-LD corrigé et conforme
+
+```json
+{
+  "@context": {
+    "cpsv":   "http://purl.org/vocab/cpsv#",
+    "cv":     "http://data.europa.eu/m8g/",
+    "dct":    "http://purl.org/dc/terms/",
+    "skos":   "http://www.w3.org/2004/02/skos/core#",
+    "locn":   "http://www.w3.org/ns/locn#",
+    "foaf":   "http://xmlns.com/foaf/0.1/"
+  },
+  "@id":   "https://demarches.service-public.gouv.fr/mademarche/demarcheGenerique/?codeDemarche=OperationTranquilliteVacances",
+  "@type": "cpsv:PublicService",
+
+  "dct:title": {
+    "@language": "fr",
+    "@value": "Opération Tranquillité Vacances"
+  },
+  "dct:description": {
+    "@language": "fr",
+    "@value": "Démarche en ligne pour le service Opération Tranquillité Vacances"
+  },
+  "dct:identifier": "OperationTranquilliteVacances",
+
+  "cv:hasCompetentAuthority": {
+    "@id":   "https://api.monservice.fr/organisations/dila",
+    "@type": "cv:PublicOrganisation",
+
+    "skos:prefLabel": {
+      "@language": "fr",
+      "@value": "Direction de l'information légale et administrative"
+    },
+    "dct:identifier": "13002526900013",
+
+    "dct:spatial": {
+      "@id":   "http://publications.europa.eu/resource/authority/country/FRA",
+      "@type": "dct:Location"
+    },
+
+    "foaf:homepage": { "@id": "https://www.service-public.fr" }
+  },
+
+  "cv:isAbout": {
+    "@id":   "https://demarches.service-public.gouv.fr/usager/wossewodda",
+    "@type": "foaf:Person",
+    "foaf:familyName": "Wossewodda",
+    "foaf:mbox": { "@id": "mailto:wossewodda-3728@yopmail.com" },
+    "locn:address": {
+      "@type":             "locn:Address",
+      "locn:thoroughfare": { "@language": "fr", "@value": "20 Avenue de Ségur" },
+      "locn:postName":     { "@language": "fr", "@value": "Paris" },
+      "locn:postCode":     "75007"
+    }
+  }
+}
+```
+
+Résultat de validation :
+
+```
+Validation Report
+Conforms: True
+```
+
+---
+
+## 6. Récapitulatif des corrections
+
+| # | Propriété | Problème | Correction |
+|---|---|---|---|
+| 1 | `cv:hasCompetentAuthority` | Type `foaf:Organization` au lieu de `cv:PublicOrganisation` | Changer le `@type` |
+| 2 | `dct:title` | Absent — obligatoire (`minCount 1`) | Ajouter le titre en `rdf:langString` |
+| 3 | `dct:identifier` | Absent — obligatoire (`minCount 1`) | Ajouter l'identifiant métier |
+| 4 | `locn:thoroughfare` | Littéral simple au lieu de `rdf:langString` | Ajouter `@language` |
+| 5 | `locn:postName` | Même problème | Ajouter `@language` |
+
+Et deux ajouts nécessaires sur `cv:PublicOrganisation` :
+
+| Propriété | Obligation | Valeur ajoutée |
+|---|---|---|
+| `skos:prefLabel` | `minCount 1` | Nom officiel en `rdf:langString` |
+| `dct:spatial` | `minCount 1` | URI pays typé `dct:Location` |
+| `dct:identifier` | `minCount 1` | SIRET de l'organisme |
+
+---
+
+## 7. Points de vigilance généraux
+
+!!! warning "Les littéraux de texte dans CPSV-AP"
+    La grande majorité des propriétés textuelles de CPSV-AP ont le datatype `rdf:langString`, c'est-à-dire qu'elles **exigent une balise de langue** (`@language` en JSON-LD). Un littéral simple `"Paris"` n'est pas équivalent à `{"@language": "fr", "@value": "Paris"}` pour le validateur SHACL.
+
+!!! tip "`cv:PublicOrganisation` ≠ `foaf:Organization`"
+    `cv:PublicOrganisation` est la classe spécifique de CPSV-AP pour les organismes publics. Elle impose `skos:prefLabel`, `dct:identifier` et `dct:spatial` (obligatoires). `foaf:Organization` est une classe générique qui n'a pas ces contraintes — elle ne satisfait pas la shape SHACL de CPSV-AP.
+
+!!! tip "L'URI de la ressource ne remplace pas `dct:identifier`"
+    Même si votre service a une URI pérenne, CPSV-AP exige un `dct:identifier` explicite — typiquement le code métier de la démarche ou le SIRET de l'organisme.
+
+---
+
+## Ressources
+
+- [Spécification CPSV-AP 3.2.0](https://semiceu.github.io/CPSV-AP/releases/3.2.0/)
+- [Shapes SHACL CPSV-AP 3.2.0](https://semiceu.github.io/CPSV-AP/releases/3.2.0/shacl/cpsv-ap-SHACL.ttl)
+- [Référence interne — CPSV-AP](../references/core-public-service.md)
+- [pyshacl — documentation](https://github.com/RDFLib/pySHACL)
+- [JSON-LD Playground](https://json-ld.org/playground/) — pour visualiser les triplets générés
