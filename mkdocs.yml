@@ -1,10 +1,10 @@
 site_name: Web Sémantique — Administrations françaises
 site_description: Documentation à destination des agents techniques des administrations françaises pour l'adoption du Web sémantique et des Core Vocabularies de l'Union européenne.
 site_author: DINUM
-site_url: https://qloridant.github.io/vocabulaire-commun/
+site_url: https://votre-organisation.github.io/docs-web-semantique/
 
-repo_name: qloridant/docs-web-semantique
-repo_url: https://github.com/qloridant/vocabulaire-commun
+repo_name: votre-organisation/docs-web-semantique
+repo_url: https://github.com/votre-organisation/docs-web-semantique
 edit_uri: edit/main/docs/
 
 docs_dir: docs
@@ -43,8 +43,11 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/qloridant/vocabulaire-commun
+      link: https://github.com/votre-organisation/docs-web-semantique
   generator: false
+
+extra_css:
+  - assets/dsfr-overrides.css
 
 plugins:
   - search:
@@ -75,12 +78,15 @@ nav:
     - "02 · Core Business": tutoriels/02-core-business.md
     - "03 · Core Location": tutoriels/03-core-location.md
     - "04 · CPSV-AP": tutoriels/04-core-public-service.md
+    - "05 · Oxigraph & SPARQL": tutoriels/05-oxigraph-local.md
   - Guides pratiques:
     - Publier en JSON-LD: guides/01-jsonld-publication.md
     - Requêtes SPARQL: guides/02-sparql-requetes.md
     - Alignement référentiels EU: guides/03-alignement-referentiels.md
+    - Déployer Oxigraph: guides/04-oxigraph-deploiement.md
   - Références:
     - Core Person Vocabulary: references/core-person.md
     - Core Business Vocabulary: references/core-business.md
     - Core Location Vocabulary: references/core-location.md
     - CPSV-AP: references/core-public-service.md
+    - "SPARQL & Oxigraph": references/sparql-oxigraph.md
