@@ -1,10 +1,10 @@
 site_name: Web Sémantique — Administrations françaises
 site_description: Documentation à destination des agents techniques des administrations françaises pour l'adoption du Web sémantique et des Core Vocabularies de l'Union européenne.
 site_author: DINUM
-site_url: https://votre-organisation.github.io/docs-web-semantique/
+site_url: https://qloridant.github.io/vocabulaire-commun/
 
-repo_name: votre-organisation/docs-web-semantique
-repo_url: https://github.com/votre-organisation/docs-web-semantique
+repo_name: qloridant/vocabulaire-commun
+repo_url: https://github.com/qloridant/vocabulaire-commun
 edit_uri: edit/main/docs/
 
 docs_dir: docs
@@ -43,7 +43,7 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/votre-organisation/docs-web-semantique
+      link: https://github.com/qloridant/vocabulaire-commun
   generator: false
 
 extra_css:
