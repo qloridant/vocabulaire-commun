@@ -26,6 +26,10 @@ Le service décrit ici est l'**Opération Tranquillité Vacances** — une déma
 
 Voici le JSON-LD transmis par le système :
 
+```warning
+L'exemple suivant contient volontairement des erreurs ! La version corrigée est plus bas.
+```
+
 ```json
 {
   "@context": {
