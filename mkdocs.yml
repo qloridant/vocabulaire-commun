@@ -74,7 +74,6 @@ nav:
     - Le Web sémantique: explication/01-web-semantique.md
     - Les formats RDF: explication/02-formats-rdf.md
   - Tutoriels:
-    - Vue d'ensemble: tutoriels/index.md
     - "01 · Core Person": tutoriels/01-core-person.md
     - "02 · Core Business": tutoriels/02-core-business.md
     - "03 · Core Location": tutoriels/03-core-location.md
